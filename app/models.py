@@ -19,7 +19,7 @@ class User (UserMixin, db.Model):
     blog = db.relationship('Blog', backref='user', lazy='dynamic')
     comment = db.relationship('Comment', backref='user', lazy='dynamic')
 
-      @property
+    @property
     def set_password(self):
         raise AttributeError('You cannot read the password attribute')
 
@@ -40,3 +40,11 @@ class User (UserMixin, db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
+class Blog(db.Model):
+    __tablename__ = 'blogs'
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String(50), nullable = False)
+    content = db.Column(db.Text(), nullable = False)
+    comment = db.relationship('Comment', backref='blog', lazy='dynamic')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
