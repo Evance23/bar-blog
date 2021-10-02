@@ -64,3 +64,11 @@ class Blog(db.Model):
     def get_blog(id):
         blog = Blog.query.filter_by(id = id).first()
         return blog
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'), nullable=False)
+    comment = db.Column(db.Text(),nullable = False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
