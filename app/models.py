@@ -88,3 +88,26 @@ class Comment(db.Model):
 
     def __repr__(self):
         return f'comment{self.comment}'
+class Follower(db.Model):
+    __tablename__ = 'followers'
+
+    id = db.Column(db.Integer,primary_key=True)
+    email = db.Column(db.String(255),unique=True, index=True)
+    
+
+    def save_follower(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+    def __repr__(self):
+        return f'Follower {self.email}'
+        
+class Quote:
+    __tablename__='quotes'
+    '''
+    Blueprint class for quotes consumed from API
+    '''
+    def __init__(self, author, quote):
+        self.author = author
+        self.quote = quote
