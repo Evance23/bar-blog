@@ -72,3 +72,19 @@ class Comment(db.Model):
     blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'), nullable=False)
     comment = db.Column(db.Text(),nullable = False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.remove(self)
+        db.session.commit()
+
+    @classmethod
+    def get_comment(id):
+        comment = Comment.query.all(id=id)
+        return comment
+
+    def __repr__(self):
+        return f'comment{self.comment}'
