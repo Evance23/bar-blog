@@ -17,3 +17,11 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password',validators = [Required(), EqualTo('password_confirm',message = 'Password must match')])
     password_confirm = PasswordField('Confirm Password',validators = [Required()])
     submit = SubmitField('Sign Up')
+    #Custom email validation
+    def validate_email(self,data_field):
+        if User.query.filter_by(email =data_field.data).first():
+            raise ValidationError("This email has been taken")
+#Custom username validation
+    def validate_username(self, data_field):
+        if User.query.filter_by(username = data_field.data).first():
+            raise ValidationError("This username has already been taken")
