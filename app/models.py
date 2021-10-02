@@ -48,3 +48,19 @@ class Blog(db.Model):
     comment = db.relationship('Comment', backref='blog', lazy='dynamic')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f"Blog{self.title}"
+
+    @classmethod
+    def get_blog(id):
+        blog = Blog.query.filter_by(id = id).first()
+        return blog
